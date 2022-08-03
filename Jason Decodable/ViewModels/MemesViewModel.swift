@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MemesViewModel {
+final class MemesViewModel: ViewModel {
     public var text: Dynamic = Dynamic("")
     public var image: Dynamic = Dynamic(Data())
     
@@ -25,31 +25,25 @@ class MemesViewModel {
         }
     }
     
-    public func requestMemes() {
-        let urlString = Constants.API.memesAPI
+    private func getImageData(from urlString: String, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        if let url = URL(string: urlString) {
+            URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+        }
+    }
+}
+
+// MARK: - DataRequestable
+extension MemesViewModel: DataRequestable {
+    func dataRequest(using param: String) {
+        guard let url = URL(string: Constants.API.memesAPI) else { return }
         
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let data = data else { return }
-            
+        request(using: url) { responseData in
             do {
-                let memes = try JSONDecoder().decode(Memes.self, from: data)
+                let memes = try JSONDecoder().decode(Memes.self, from: responseData)
                 self.memes = memes.data.memes
             } catch {
                 print(error)
             }
-        }.resume()
-    }
-    
-    private func getImageData(from urlString: String, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        if let url = URL(string: urlString) {
-            URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NationTableViewCell: UITableViewCell {
+final class NationTableViewCell: UITableViewCell {
     @IBOutlet weak public var nationNameLabel: UILabel!
     @IBOutlet weak public var probabilityBar: UIProgressView!
     @IBOutlet weak public var percentLabel: UILabel!

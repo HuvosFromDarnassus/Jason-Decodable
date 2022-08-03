@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6524B99C289A7756007F8EDD /* ViewModelBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6524B99B289A7756007F8EDD /* ViewModelBindable.swift */; };
+		6524B99F289A78B6007F8EDD /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6524B99E289A78B6007F8EDD /* ViewModel.swift */; };
+		6524B9A3289A87BF007F8EDD /* DataRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6524B9A2289A87BF007F8EDD /* DataRequestable.swift */; };
+		6524B9AB289A8D5C007F8EDD /* ViewControllerSetupable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6524B9AA289A8D5C007F8EDD /* ViewControllerSetupable.swift */; };
 		658F2FBE28854219008F05D6 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F2FBD28854219008F05D6 /* MenuItem.swift */; };
 		658F2FC02885428D008F05D6 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F2FBF2885428D008F05D6 /* Menu.swift */; };
 		658F2FC22885B43A008F05D6 /* NumberFactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F2FC12885B43A008F05D6 /* NumberFactsViewController.swift */; };
@@ -35,6 +39,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6524B99B289A7756007F8EDD /* ViewModelBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindable.swift; sourceTree = "<group>"; };
+		6524B99E289A78B6007F8EDD /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		6524B9A2289A87BF007F8EDD /* DataRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRequestable.swift; sourceTree = "<group>"; };
+		6524B9AA289A8D5C007F8EDD /* ViewControllerSetupable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerSetupable.swift; sourceTree = "<group>"; };
 		658F2FBD28854219008F05D6 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		658F2FBF2885428D008F05D6 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		658F2FC12885B43A008F05D6 /* NumberFactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFactsViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +83,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6524B99D289A7783007F8EDD /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				6524B99B289A7756007F8EDD /* ViewModelBindable.swift */,
+				6524B9A2289A87BF007F8EDD /* DataRequestable.swift */,
+				6524B9AA289A8D5C007F8EDD /* ViewControllerSetupable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		65E495DF28844A90007F6252 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +114,7 @@
 			children = (
 				65E495EB28844A90007F6252 /* AppDelegate.swift */,
 				65E495ED28844A90007F6252 /* SceneDelegate.swift */,
+				6524B99D289A7783007F8EDD /* Protocols */,
 				65E4961728848DE9007F6252 /* Supporting files */,
 				65E4960928844ACC007F6252 /* Models */,
 				65E4960F28848A9A007F6252 /* ViewModels */,
@@ -147,6 +166,7 @@
 		65E4960F28848A9A007F6252 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				6524B99E289A78B6007F8EDD /* ViewModel.swift */,
 				65E4961228848AB1007F6252 /* Binding */,
 				658F2FC32885B597008F05D6 /* NumbersFactsViewModel.swift */,
 				658F2FC72886BF27008F05D6 /* NationViewModel.swift */,
@@ -249,7 +269,9 @@
 				658F300D2888594A008F05D6 /* ServiceInfoViewModel.swift in Sources */,
 				658F2FC02885428D008F05D6 /* Menu.swift in Sources */,
 				65E4960528844AC7007F6252 /* ServiceInfo.swift in Sources */,
+				6524B99F289A78B6007F8EDD /* ViewModel.swift in Sources */,
 				65E4960628844AC7007F6252 /* Numbers.swift in Sources */,
+				6524B9A3289A87BF007F8EDD /* DataRequestable.swift in Sources */,
 				658F2FCB2886C379008F05D6 /* NationTableViewCell.swift in Sources */,
 				658F2FC82886BF27008F05D6 /* NationViewModel.swift in Sources */,
 				65E4961428848B9A007F6252 /* MenuViewController.swift in Sources */,
@@ -259,6 +281,8 @@
 				658F2FBE28854219008F05D6 /* MenuItem.swift in Sources */,
 				65E4960828844AC7007F6252 /* Nationalize.swift in Sources */,
 				65E4960D2884897C007F6252 /* Dynamic.swift in Sources */,
+				6524B9AB289A8D5C007F8EDD /* ViewControllerSetupable.swift in Sources */,
+				6524B99C289A7756007F8EDD /* ViewModelBindable.swift in Sources */,
 				658F300F288862BA008F05D6 /* ServiceInfoViewController.swift in Sources */,
 				65E495EC28844A90007F6252 /* AppDelegate.swift in Sources */,
 				658F2FD2288724AC008F05D6 /* MemesViewModel.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ServiceInfoViewController: UIViewController {
+final class ServiceInfoViewController: UIViewController {
     @IBOutlet weak private var serviceTextField: UITextField!
     @IBOutlet weak private var serviceNameLabel: UILabel!
     @IBOutlet weak private var serviceImage: UIImageView!
@@ -22,30 +22,36 @@ class ServiceInfoViewController: UIViewController {
     }
     
     internal override func viewWillAppear(_ animated: Bool) {
-        title = Constants.Menu.Title.services
+        setupViewController()
     }
     
     @IBAction private func searchButtonPressed(_ sender: UIButton) {
         guard let service = serviceTextField.text else { return }
-        
-        viewModel.requestInfo(of: service)
+        viewModel.dataRequest(using: service)
     }
     
-    private func bindViewModel() {
+    private func applyResultToLabel(using uiLabel: UILabel, result: String, isNotErrorLabel: Bool = true) {
+        DispatchQueue.main.async {
+            uiLabel.isHidden = false
+            uiLabel.text = result
+            self.errorMessageLabel.isHidden = isNotErrorLabel
+        }
+    }
+}
+
+// MARK: - ViewModelBindable
+extension ServiceInfoViewController: ViewModelBindable {
+    internal func bindViewModel() {
         viewModel.name.bind { name in
-            DispatchQueue.main.async {
-                self.serviceNameLabel.isHidden = false
-                self.serviceNameLabel.text = name
-                self.errorMessageLabel.isHidden = true
-            }
+            self.applyResultToLabel(using: self.serviceNameLabel, result: name)
         }
         
         viewModel.description.bind { description in
-            DispatchQueue.main.async {
-                self.serviceDescriptionLabel.isHidden = false
-                self.serviceDescriptionLabel.text = description
-                self.errorMessageLabel.isHidden = true
-            }
+            self.applyResultToLabel(using: self.serviceDescriptionLabel, result: description)
+        }
+        
+        viewModel.errorMessage.bind { error in
+            self.applyResultToLabel(using: self.errorMessageLabel, result: error, isNotErrorLabel: false)
         }
         
         viewModel.image.bind { image in
@@ -55,12 +61,12 @@ class ServiceInfoViewController: UIViewController {
                 self.errorMessageLabel.isHidden = true
             }
         }
-        
-        viewModel.errorMessage.bind { error in
-            DispatchQueue.main.async {
-                self.errorMessageLabel.isHidden = false
-                self.errorMessageLabel.text = error
-            }
-        }
+    }
+}
+
+// MARK: - ViewControllerSetupable
+extension ServiceInfoViewController: ViewControllerSetupable {
+    internal func setupViewController() {
+        title = Constants.Menu.Title.services
     }
 }

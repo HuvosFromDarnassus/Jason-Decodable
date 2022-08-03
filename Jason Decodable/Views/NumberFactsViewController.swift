@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NumberFactsViewController: UIViewController {
+final class NumberFactsViewController: UIViewController {
     @IBOutlet weak private var resultLabel: UILabel!
     @IBOutlet weak private var textField: UITextField!
     
@@ -29,11 +29,14 @@ class NumberFactsViewController: UIViewController {
     @IBAction private func getFactButtonPressed(_ sender: UIButton) {
         if isTextFieldValueValid {
             let number = textField.text
-            viewModel.requestFact(about: number!)
+            viewModel.dataRequest(using: number!)
         }
     }
-    
-    private func bindViewModel() {
+}
+
+// MARK: - ViewModelBindable
+extension NumberFactsViewController: ViewModelBindable {
+    internal func bindViewModel() {
         viewModel.result.bind { fact in
             DispatchQueue.main.async {
                 self.resultLabel.isHidden = false
@@ -41,8 +44,11 @@ class NumberFactsViewController: UIViewController {
             }
         }
     }
-    
-    private func setupViewController() {
+}
+
+// MARK: - ViewControllerSetupable
+extension NumberFactsViewController: ViewControllerSetupable {
+    internal func setupViewController() {
         title = Constants.Menu.Title.numbers
     }
 }

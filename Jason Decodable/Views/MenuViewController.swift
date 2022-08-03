@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MenuViewController: UICollectionViewController {
+final class MenuViewController: UICollectionViewController {
     
     private let menuModel: Menu = Menu()
     
@@ -28,7 +28,7 @@ class MenuViewController: UICollectionViewController {
         let cellImage = UIImage(named: cellData.imageName)
         let cellLabel = cellData.label
         
-        configure(&cell, using: cellImage!, cellLabel)
+        configureCell(&cell, using: cellImage!, cellLabel)
         
         return cell
     }
@@ -38,7 +38,7 @@ class MenuViewController: UICollectionViewController {
         performSegue(withIdentifier: itemId, sender: self)
     }
     
-    private func configure(_ cell: inout MenuViewCell, using image: UIImage, _ label: String) {
+    private func configureCell(_ cell: inout MenuViewCell, using image: UIImage, _ label: String) {
         cell.setImage(image)
         cell.setLabel(label)
     }
@@ -66,8 +66,11 @@ class MenuViewController: UICollectionViewController {
         layout.minimumInteritemSpacing = 1
         layout.minimumLineSpacing = 1
     }
-    
-    private func setupViewController() {
+}
+
+// MARK: - ViewControllerSetupable
+extension MenuViewController: ViewControllerSetupable {
+    internal func setupViewController() {
         title = Constants.Menu.Title.menu
     }
 }

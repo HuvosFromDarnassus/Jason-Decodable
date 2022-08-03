@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NationViewController: UIViewController {
+final class NationViewController: UIViewController {
     @IBOutlet weak private var nameTextField: UITextField!
     @IBOutlet weak private var nameLabel: UILabel!
     @IBOutlet weak private var nationsTableView: UITableView!
@@ -28,7 +28,7 @@ class NationViewController: UIViewController {
     @IBAction private func calculateNationPressed(_ sender: UIButton) {
         guard let name = nameTextField.text else { return }
         
-        viewModel.requestNationProbabilities(by: name)
+        viewModel.dataRequest(using: name)
         nameTextField.text = ""
     }
     
@@ -37,11 +37,6 @@ class NationViewController: UIViewController {
             return name
         }
         return countryCode
-    }
-    
-    private func setupViewController() {
-        setupNavigationBar()
-        setupTableView()
     }
     
     private func setupNavigationBar() {
@@ -62,8 +57,11 @@ class NationViewController: UIViewController {
         self.nameLabel.text = "Name: \(result.name)"
         self.nationsTableView.reloadData()
     }
-    
-    private func bindViewModel() {
+}
+
+// MARK: - ViewModelBindable
+extension NationViewController: ViewModelBindable {
+    internal func bindViewModel() {
         viewModel.result.bind { result in
             self.tableDataItems = result.country
             
@@ -108,6 +106,14 @@ extension NationViewController: UITableViewDataSource {
         }
         
         return countryName
+    }
+}
+
+// MARK: - ViewControllerSetupable
+extension NationViewController: ViewControllerSetupable {
+    internal func setupViewController() {
+        setupNavigationBar()
+        setupTableView()
     }
 }
 

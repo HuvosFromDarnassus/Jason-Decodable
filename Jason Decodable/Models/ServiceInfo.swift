@@ -9,7 +9,7 @@ struct ServiceInfo: Codable {
     let url: String
     let metadata: Metadata
     
-    struct Metadata: Codable {
+    internal struct Metadata: Codable {
         let url: String
         let name, description: String
         let images: [String]

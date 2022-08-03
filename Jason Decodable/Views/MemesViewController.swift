@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MemesViewController: UIViewController {
+final class MemesViewController: UIViewController {
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var memeTextLabel: UILabel!
     
@@ -16,18 +16,23 @@ class MemesViewController: UIViewController {
     internal override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
-        viewModel.requestMemes()
+        viewModel.dataRequest(using: "")
     }
     
     internal override func viewWillAppear(_ animated: Bool) {
-        title = Constants.Menu.Title.memes
+        setupViewController()
     }
     
     @IBAction private func getMemeButtonPressed(_ sender: UIButton) {
         viewModel.getMeme()
     }
     
-    private func bindViewModel() {
+    
+}
+
+// MARK: - ViewModelBindable
+extension MemesViewController: ViewModelBindable {
+    internal func bindViewModel() {
         viewModel.image.bind { imageData in
             DispatchQueue.main.async {
                 self.imageView.isHidden = false
@@ -41,5 +46,12 @@ class MemesViewController: UIViewController {
                 self.memeTextLabel.text = text
             }
         }
+    }
+}
+
+// MARK: - ViewControllerSetupable
+extension MemesViewController: ViewControllerSetupable {
+    internal func setupViewController() {
+        title = Constants.Menu.Title.memes
     }
 }

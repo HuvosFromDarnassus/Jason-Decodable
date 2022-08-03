@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MenuViewCell: UICollectionViewCell {
+final class MenuViewCell: UICollectionViewCell {
     @IBOutlet private weak var itemImage: UIImageView!
     @IBOutlet private weak var itemLabel: UILabel!
     

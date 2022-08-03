@@ -7,31 +7,18 @@
 
 import UIKit
 
-class ServiceInfoViewModel {
+final class ServiceInfoViewModel: ViewModel {
     public var name: Dynamic = Dynamic("")
     public var description: Dynamic = Dynamic("")
     public var image: Dynamic = Dynamic(UIImage())
     public var errorMessage: Dynamic = Dynamic("")
     
-    public func requestInfo(of service: String) {
-        guard let url = URL(string: "\(Constants.API.serviceInfoAPI)\(service)") else { return }
+    private func sendResults(using serviceInfo: ServiceInfo) {
+        self.name.value = serviceInfo.metadata.name
+        self.description.value = serviceInfo.metadata.description
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let data = data else { return }
-            
-            do {
-                let serviceInfo = try JSONDecoder().decode(ServiceInfo.self, from: data)
-                self.sendResults(using: serviceInfo)
-            } catch {
-                print(error)
-                self.errorMessage.value = error.localizedDescription
-            }
-        }.resume()
+        let imageUrl = serviceInfo.metadata.images[0]
+        self.getServiceImage(by: imageUrl)
     }
     
     private func getServiceImage(by urlString: String) {
@@ -50,12 +37,21 @@ class ServiceInfoViewModel {
             }
         }.resume()
     }
-    
-    private func sendResults(using serviceInfo: ServiceInfo) {
-        self.name.value = serviceInfo.metadata.name
-        self.description.value = serviceInfo.metadata.description
+}
+
+// MARK: - DataRequestable
+extension ServiceInfoViewModel: DataRequestable {
+    public func dataRequest(using service: String) {
+        guard let url = URL(string: "\(Constants.API.serviceInfoAPI)\(service)") else { return }
         
-        let imageUrl = serviceInfo.metadata.images[0]
-        self.getServiceImage(by: imageUrl)
+        request(using: url) { responseData in
+            do {
+                let serviceInfo = try JSONDecoder().decode(ServiceInfo.self, from: responseData)
+                self.sendResults(using: serviceInfo)
+            } catch {
+                print(error)
+                self.errorMessage.value = error.localizedDescription
+            }
+        }
     }
 }

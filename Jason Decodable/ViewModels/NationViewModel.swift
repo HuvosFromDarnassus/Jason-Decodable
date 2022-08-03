@@ -7,32 +7,22 @@
 
 import UIKit
 
-class NationViewModel {
+final class NationViewModel: ViewModel {
     public var result: Dynamic = Dynamic(Nationalize(name: "", country: []))
-    
-    public func requestNationProbabilities(by name: String) {
-        let urlString = "\(Constants.API.nationAPI)\(name)"
+}
+
+// MARK: - DataRequestable
+extension NationViewModel: DataRequestable {
+    public func dataRequest(using name: String) {
+        guard let url = URL(string: "\(Constants.API.nationAPI)\(name)") else { return }
         
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
+        request(using: url) { responseData in
+            do {
+                let probability = try JSONDecoder().decode(Nationalize.self, from: responseData)
+                self.result.value = probability
+            } catch {
                 print(error)
-                return
             }
-            
-            self.convert(data, to: Nationalize.self)
-        }.resume()
-    }
-    
-    private func convert(_ data: Data?, to type: Nationalize.Type) {
-        guard let data = data else { return }
-        
-        do {
-            let probability = try JSONDecoder().decode(type, from: data)
-            self.result.value = probability
-        } catch {
-            print(error)
         }
     }
 }
